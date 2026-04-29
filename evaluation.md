@@ -1,4 +1,28 @@
-# latent code 고정
+# 방법정리
+
+1. `hair_latent` = ControlNet sampling (고정, 변형 없음)
+
+2. **[Latent space]**
+   ```
+   face_latent = VAE.encode(face)
+   matte를 64×64으로 다운샘플
+   composite = torch.where(matte > 0.5, hair_latent, face_latent)
+       → 헤어 영역: hair_latent 그대로
+       → 배경 영역: face_latent
+   ```
+
+3. `full_image` = VAE.decode(composite)
+
+4. **[Pixel space 후처리]**
+   ```
+   hard_mask = matte > 0.5
+   full_clean = full_image * hard_mask + face * (~hard_mask)
+       → 경계 거뭇거뭇을 원본 face로 덮어씌움
+   ```
+
+`hair_latent`는 건드리지 않고, face와의 합성은 latent space에서 하고, 경계 artifact만 pixel space에서 정리하는 구조.
+
+---
 
 ## 전후 비교 (2534 ~ 2676)
 
@@ -22,19 +46,6 @@
 | ![](custom_results/stroke_color2/braid_2676.png) | ![](custom_results/test_batch/braid_2676_full.png) | ![](custom_results/test_batch2/braid_2676_full.png) |
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 # 정량평가
 
 ## Overall Summary (n=107, hair region masked)
@@ -54,6 +65,27 @@
 | **ArcFace Cos ↑** | 0.7697 | **0.7916** |
 
 > FID: 107장 기준 (500장 이하, 참고용). ArcFace Cos: ResNet50 (ImageNet) embedding proxy.
+
+## 지표 설명
+
+### 스케치 충실도
+- **Edge IoU ↑** — 생성 이미지의 엣지맵과 입력 스케치의 교집합/합집합 비율. 스케치 선을 얼마나 잘 따랐는지 측정. 헤어 영역 마스크 내에서만 계산.
+- **Chamfer Dist ↓** — 생성 엣지맵과 스케치 엣지 간 최근접 거리의 평균. 선이 위치적으로 얼마나 가까운지 측정. 값이 작을수록 스케치와 일치.
+- **Sketch LPIPS ↓** — 생성 이미지와 입력 스케치 간 perceptual 거리. 스케치의 질감·구조를 시각적으로 얼마나 반영했는지 측정.
+
+### GT 재구성 품질
+- **LPIPS (GT) ↓** — 생성 이미지와 GT 간 perceptual 거리 (VGG feature 기반). 낮을수록 GT와 시각적으로 유사.
+- **SSIM (GT) ↑** — 생성 이미지와 GT 간 구조적 유사도 (밝기·대비·구조). 1에 가까울수록 GT와 일치.
+- **PSNR (GT) ↑** — 생성 이미지와 GT 간 pixel-level MSE를 dB로 변환. 높을수록 픽셀 단위 오차가 작음.
+
+### 분포 품질
+- **Hair FID ↓** — 헤어 영역 크롭 이미지의 분포와 GT 분포 간 Fréchet 거리. 낮을수록 생성된 헤어가 GT 데이터셋 분포에 가까움. (107장 기준으로 참고용)
+- **Boundary FID ↓** — 헤어-피부 경계 영역 크롭의 분포 거리. 낮을수록 경계 합성이 자연스러운 분포에 가까움.
+- **Boundary LPIPS ↓** — 경계 영역에서 생성 이미지와 GT 간 perceptual 거리. 경계 artifact를 직접 측정.
+
+### 얼굴 보존
+- **Face LPIPS ↓** — 헤어 영역 외 얼굴 영역에서 생성 이미지와 GT 간 perceptual 거리. 0에 가까울수록 얼굴을 원본 그대로 보존.
+- **ArcFace Cos ↑** — 생성 이미지와 GT의 얼굴 임베딩 코사인 유사도. 1에 가까울수록 동일 인물로 인식됨. (ResNet50 ImageNet proxy 사용)
 
 ---
 
