@@ -90,7 +90,6 @@ except Exception:
 
 BLOCK_H = CELL_H + LABEL_H  # height of one image+label block
 TOTAL_W = PAD + COLS * (CELL_W + PAD)
-TOTAL_H = COL_HEADER_H + ROWS * (BLOCK_H + TEXT_ROW_H + PAD) + PAD
 
 
 def load_img(path):
@@ -113,7 +112,9 @@ def draw_text_center(draw, text, x, y, w, h, font, fill=(30, 30, 30)):
 
 
 def make_figure(rows_data, title, out_path, rank_bg):
-    canvas = Image.new("RGB", (TOTAL_W, TOTAL_H), BG)
+    n = len(rows_data)
+    total_h = COL_HEADER_H + n * (BLOCK_H + TEXT_ROW_H + PAD) + PAD
+    canvas = Image.new("RGB", (TOTAL_W, total_h), BG)
     draw = ImageDraw.Draw(canvas)
 
     # column headers
