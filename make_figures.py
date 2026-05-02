@@ -169,7 +169,27 @@ def make_figure(rows_data, title, out_path, rank_bg):
     print(f"Saved: {out_path}")
 
 
-make_figure(best20,  "Best 20 (ΔSSIM)",
-            p("custom_results/best20.png"),  RANK_BG_BEST)
-make_figure(worst20, "Worst 20 (ΔSSIM)",
-            p("custom_results/worst20.png"), RANK_BG_WORST)
+braid_best5 = [
+    ("braid", "braid_4261", "+0.0570", "0.5192",  "8.50", "0.4094", "0.5761", "11.58", "0.3476"),
+    ("braid", "braid_4315", "+0.0495", "0.4298", "10.55", "0.4726", "0.4793", "12.07", "0.4692"),
+    ("braid", "braid_4135", "+0.0477", "0.5108", "11.17", "0.3503", "0.5585", "12.36", "0.3702"),
+    ("braid", "braid_4052", "+0.0417", "0.4991", "10.79", "0.4330", "0.5408", "12.28", "0.4058"),
+    ("braid", "braid_4138", "+0.0414", "0.5474", "11.25", "0.3628", "0.5889", "12.97", "0.3567"),
+]
+
+braid_worst5 = [
+    ("braid", "braid_2537", "-0.0080", "0.4269",  "8.87", "0.4529", "0.4189",  "8.47", "0.4708"),
+    ("braid", "braid_4201", "-0.0074", "0.6122", "13.78", "0.2947", "0.6048", "13.83", "0.3762"),
+    ("braid", "braid_4042", "-0.0069", "0.5659", "10.36", "0.2771", "0.5590", "10.93", "0.2792"),
+    ("braid", "braid_3188", "-0.0068", "0.5405",  "9.79", "0.3228", "0.5337",  "9.67", "0.3681"),
+    ("braid", "braid_4143", "-0.0049", "0.7238", "11.18", "0.2191", "0.7189", "12.49", "0.2243"),
+]
+
+make_figure(best20,      "Best 20 (ΔSSIM)",
+            p("custom_results/best20.png"),       RANK_BG_BEST)
+make_figure(worst20,     "Worst 20 (ΔSSIM)",
+            p("custom_results/worst20.png"),      RANK_BG_WORST)
+make_figure(braid_best5, "Braid Best 5 (ΔSSIM)",
+            p("custom_results/braid_best5.png"),  RANK_BG_BEST)
+make_figure(braid_worst5,"Braid Worst 5 (ΔSSIM)",
+            p("custom_results/braid_worst5.png"), RANK_BG_WORST)
