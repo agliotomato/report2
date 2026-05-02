@@ -1,1 +1,6 @@
 dataset/
+custom_results/test/
+custom_results/gan/DiT_sketch_gen.png
+custom_results/gan/DiT_sketch_panel.png
+custom_results/gan/DiT_sketch_sk.png
+custom_results/
