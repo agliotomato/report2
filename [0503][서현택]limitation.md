@@ -41,7 +41,5 @@ GT만 구할 수 있었고 matte와 sketch는 nanobanana로 생성.
 
 | | **GT** | **Sketch** | **SHS** | **Ours** |
 |:--:|:------:|:---------:|:-------:|:--------:|
-| **limit 1** | ![](limitation/braid/img/test/limit_GT.png) | ![](limitation/braid/sketch/test/limit_paper.png) | ![](limitation/gan/limit_paper.png) | ![](limitation/dit/limit_sketch_clean_full.png) |
-| **limit 2** | ![](limitation/braid/img/test/limit2_GT.png) | ![](limitation/braid/sketch/test/limit2_paper.png) | ![](limitation/gan/limit2_paper.png) | ![](limitation/dit/limit2_sketch_clean_full.png) |
-
-> ours 아직 업데이트 안됨. 
+| **limit 1** | ![](limitation/braid/img/test/limit_GT.png) | ![](limitation/braid/sketch/test/limit_paper.png) | ![](limitation/gan/limit_paper.png) | ![](limitation/dit/limit_paper_full.png) |
+| **limit 2** | ![](limitation/braid/img/test/limit2_GT.png) | ![](limitation/braid/sketch/test/limit2_paper.png) | ![](limitation/gan/limit2_paper.png) | ![](limitation/dit/limit2_paper_full.png) |
