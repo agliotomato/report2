@@ -21,7 +21,7 @@
 
 ---
 
-## Key Findings
+## 분석
 
 ### 1. SHR: +25.0% 향상 (가장 큰 개선)
 Strand-level braid 구조 품질에서 가장 큰 개선. Phase 1에서 unbraid representation을 학습한 것이 Phase 2의 braid 생성에 직접적으로 기여함을 시사.
