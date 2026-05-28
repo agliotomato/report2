@@ -1,4 +1,5 @@
-dataset/
+dataset3/braid/
+dataset3/unbraid/
 custom_results/test/
 custom_results/gan/DiT_sketch_gen.png
 custom_results/gan/DiT_sketch_panel.png
